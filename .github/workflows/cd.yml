@@ -26,7 +26,7 @@ jobs:
         id: version
         uses: ashley-taylor/read-json-property-action@v1.0
         with:
-          file: package.json
+          path: ./package.json
           property: version
       # 安装依赖
       - name: install
