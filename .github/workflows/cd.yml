@@ -1,0 +1,49 @@
+name: CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+#     # 拉取代码
+      - uses: actions/checkout@v2
+      # 下载 node
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      # 添加缓存
+      - name: cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      # 获取版本号
+      - name: get version
+        id: version
+        uses: ashley-taylor/read-json-property-action@v1.0
+        with:
+          file: package.json
+          property: version
+      # 安装依赖
+      - name: install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install -g pnpm && pnpm install
+      - name: build
+        run: |
+          pnpm run docs:build
+          zip -r docs.zip .vitepress/dist
+      # 基于当前commit进行版本发布（create a release），tag_name为版本号
+      - name: create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{steps.version.outputs.value}}
+          release_name: v${{steps.version.outputs.value}}
+          draft: false
+          prerelease: false
