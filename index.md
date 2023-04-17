@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Typescript 实战手册"
-  text: "Typescript 相关的工具类型实现、实战用法等"
+  text: "工具类型实现、实战用法等"
   tagline: 工具类型 实战用法
   actions:
     - theme: brand

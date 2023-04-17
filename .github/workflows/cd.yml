@@ -47,3 +47,13 @@ jobs:
           release_name: v${{steps.version.outputs.value}}
           draft: false
           prerelease: false
+      # 上传打包后的文件到 oss
+      - name: upload files to OSS
+        uses: fangbinwei/aliyun-oss-website-action@v1
+        with:
+          accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
+          accessKeySecret: ${{ secrets.ACCESS_KEY_SECRET }}
+          bucket: typescript-practical-manual
+          # use your own endpoint
+          endpoint: ts.rxshc.com
+          folder: .vitepress/dist

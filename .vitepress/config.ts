@@ -14,11 +14,23 @@ export default defineConfig({
     sidebar: {
       '/ToolType/': [
         {
-          text: 'ToolType',
+          text: '简单',
           items: [
             { text: 'Markdown Examples', link: '/markdown-examples' },
           ]
-        }
+        },
+        {
+          text: '中等',
+          items: [
+            { text: 'Markdown Examples', link: '/markdown-examples' },
+          ]
+        },
+        {
+          text: '困难',
+          items: [
+            { text: 'Markdown Examples', link: '/markdown-examples' },
+          ]
+        },
       ]
     },
 
