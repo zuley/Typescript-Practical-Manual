@@ -57,3 +57,4 @@ jobs:
           # use your own endpoint
           endpoint: ts.rxshc.com
           folder: .vitepress/dist
+          cname: true
