@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 18
       # 添加缓存
-      - name: cache
+      - name: 添加缓存
         id: cache
         uses: actions/cache@v3
         with:
@@ -22,22 +22,22 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       # 获取版本号
-      - name: get version
+      - name: 获取版本号
         id: version
         uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: ./package.json
           property: version
       # 安装依赖
-      - name: install
+      - name: 安装依赖
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install -g pnpm && pnpm install
-      - name: build
+      - name: 编译并打包
         run: |
           pnpm run docs:build
           zip -r docs.zip .vitepress/dist
       # 基于当前commit进行版本发布（create a release），tag_name为版本号
-      - name: create release
+      - name: 创建发布
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -48,7 +48,7 @@ jobs:
           draft: false
           prerelease: false
       # 上传打包后的文件到 oss
-      - name: upload files to OSS
+      - name: 上传到OSS
         uses: fangbinwei/aliyun-oss-website-action@v1
         with:
           accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
